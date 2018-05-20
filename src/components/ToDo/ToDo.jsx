@@ -1,44 +1,54 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './ToDo.css';
+import Columns from './Columns.jsx';
+import Counter from './Counter.jsx';
+import Task from './Task.jsx';
+import Tasklist from './Tasklist.jsx';
 
-const ToDo = () => {
 
-  return (
-    <section className="section todo project">
-      <div className="columns">
-        <div className="column container is-fluid">
-          <h1 className="title">ToDo React App &nbsp;  
-          <span className="has-text-success">12</span> / 20
-          </h1>
-          <div className="notification">
-            <div>
-              <label className="checkbox is-size-3">
-                <input className="todo-checkbox" type="checkbox" />
-                Buy Milk
-              </label>
-            </div>
+class ToDo extends Component {
 
-            <div>
-              <label className="checkbox is-size-3">
-                <input className="todo-checkbox" type="checkbox" />
-                Pay Taxes
-              </label>
-            </div>
-          </div>
+  state = {
+    tasks: [
+      {
+        title: 'Buy Milk',
+        done: false
+      },
+      {
+        title: 'Walk the dog',
+        done: true
+      }
 
-          <div className="columns">
-            <div className="column is-two-thirds">
-              <input className="input is-large" placeholder="Your task description" />
-            </div>
-            <div className="column">  
-              <a className="button is-link is-large">Add Task</a>
-            </div>
-          </div>  
+    ]   
+  }
 
-         </div>
-      </div>  
-    </section>
-  )
+  checkIfDone = () => {
+
+    let sum = 0
+    this.state.tasks.forEach((task) => {
+      if (task.done) {
+        sum++
+      }
+    })
+
+    return sum;
+  }
+
+  render() {
+
+    return (
+      <section className="section todo project">
+        <div className="columns">
+          <div className="column container is-fluid">
+            <Counter total = {this.state.tasks.length} doneCount = {this.checkIfDone()}/>
+            <Tasklist tasks = {this.state.tasks}/>
+            <Columns/>
+           </div>
+        </div>  
+      </section>
+    )
+
+  }  
 }
 
 export default ToDo;
